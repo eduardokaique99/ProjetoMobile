@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 const styles2 = StyleSheet.create({
   container: {
     flexDirection: 'row', // Organiza os botões em uma linha horizontal
@@ -32,6 +33,7 @@ const styles2 = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
     color: 'black',
+    display: 'center'
   },
 }); 
 

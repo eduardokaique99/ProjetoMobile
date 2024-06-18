@@ -6,11 +6,13 @@ import {
   FlatList,
 } from "react-native";
 import styles from "../config/styles";
-import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useNavigation, useFocusEffect  } from "@react-navigation/native";
+import { useCallback, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { List, Button, Card } from "react-native-paper";
+import Icon from "react-native-vector-icons/FontAwesome5";
+import { styles2 } from "../config/styles";
 
 const UsuariosListaScreen = () => {
   const [usuarios, setUsers] = useState([]);
@@ -20,17 +22,36 @@ const UsuariosListaScreen = () => {
     navigation.navigate(screenName);
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      // Busca dados da coleção "usuarios"
-      const colRef = collection(db, "usuarios");
-      const docSnap = await getDocs(colRef);
-      const usersData = docSnap.docs.map((doc) => doc.data());
-      setUsers(usersData);
-      console.log(usersData);
-    }
-    fetchData();
-  }, []);
+
+  const fetchData = async () => {
+    const colRef = collection(db, "usuarios");
+    const docSnap = await getDocs(colRef);
+    const usuariosData = docSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setUsers(usuariosData);
+    console.log(usuariosData);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+
+  //useEffect(() => {
+  //  async function fetchData() {
+  //    // Busca dados da coleção "usuarios"
+  //    const colRef = collection(db, "usuarios");
+  //    const docSnap = await getDocs(colRef);
+  //    const usersData = docSnap.docs.map((doc) => doc.data());
+  //    setUsers(usersData);
+  //    console.log(usersData);
+  //  }
+  //  fetchData();
+  //}, []);
 
 
   return (
@@ -43,7 +64,19 @@ const UsuariosListaScreen = () => {
           </Text>
           
           <View style={styles.container}>
+          <TouchableOpacity
+        style={styles2}
+        onPress={() => handleButtonPress("TagNewScreen")}
+      >
+        <Icon name="plus" size={20} color="#fff" style={{ marginRight: 10 }} />
+        <Text style={styles2.buttonText}>Nova Tag</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles2} onPress={() => handleButtonPress("TagReportScreen")}>
+        <Icon name="bar-chart" size={20} color="#fff" style={{ marginRight: 10 }} />
+        <Text style={styles2.buttonText}>Relatório de Tags</Text>
+      </TouchableOpacity>
             <FlatList
+              keyExtractor={(item) => item.id}
               data={usuarios}
               renderItem={({ item }) => (
                 <Card style={{ margin: 8 }}>
@@ -84,32 +117,24 @@ const UsuariosListaScreen = () => {
                     {/* Não é recomendado exibir a senha */}
                   </Card.Content>
                   <Card.Actions>
-                    <Button
-                      onPress={() => handleButtonPress("UsuariosEditScreen")}
+                  <Button
+                      onPress={() =>
+                        navigation.navigate("UsuariosEditScreen", { item })
+                      }
                     >
                       Editar
                     </Button>
                     <Button
-                      onPress={() => handleButtonPress("UsuariosEditScreen")}
+                      onPress={() =>
+                        navigation.navigate("UsuariosDeleteScreen", { item })
+                      }
                     >
-                      Excluir
+                      Deletar
                     </Button>
                   </Card.Actions>
                 </Card>
               )}
-              keyExtractor={(item) => item.email}
             />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleButtonPress("UsuariosNewScreen")}
-            >
-              <Text style={styles.buttonText}>Cadastrar Usuário</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleButtonPress("UsuariosReportScreen")}>
-              <Text style={styles.buttonText}>Relatório de Usuários</Text>
-              </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import styles from "../config/styles";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { navigation } from '@react-navigation/native'
+
 
 export default function VeiculosNewScreen({ navigation }) {
   const [idVeiculo, setIdVeiculo] = useState("");
@@ -34,6 +36,8 @@ export default function VeiculosNewScreen({ navigation }) {
       idCondominio: idCondominio,
       situacao: situacao,
     });
+    navigation.pop()
+    //navigation.navigate('VeiculosListaScreen');
   };
 
   return (
@@ -113,6 +117,7 @@ export default function VeiculosNewScreen({ navigation }) {
             alignSelf: "flex-end",
           }}
           onPress={cadastrarVeiculo}
+
         >
           Salvar
         </Button>
