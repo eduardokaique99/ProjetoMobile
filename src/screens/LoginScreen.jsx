@@ -87,6 +87,9 @@ export default function LoginScreen({ navigation }) {
           >
             Entrar
           </Button>
+            <Button onPress={() => navigation.navigate("RegistroScreen")}>
+              Não tem uma conta? Cadastre-se
+            </Button>
         </View>
       )}
     </View>

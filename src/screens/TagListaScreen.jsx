@@ -14,7 +14,6 @@ import { List, Button, Card } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { styles2 } from "../config/styles";
 
-
 const TagListaScreen = () => {
   const [tags, setTags] = useState([]);
   const navigation = useNavigation();
@@ -61,20 +60,31 @@ const TagListaScreen = () => {
             Local destinado para o CRUD de TAG.
           </Text>
 
-
           <View style={styles.container}>
-          <TouchableOpacity
-        style={styles2}
-        onPress={() => handleButtonPress("TagNewScreen")}
-      >
-        <Icon name="plus" size={20} color="#fff" style={{ marginRight: 10 }} />
-        <Text style={styles2.buttonText}>Nova Tag</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles2} onPress={() => handleButtonPress("TagReportScreen")}>
-        <Icon name="bar-chart" size={20} color="#fff" style={{ marginRight: 10 }} />
-        <Text style={styles2.buttonText}>Relatório de Tags</Text>
-      </TouchableOpacity>
-
+            <TouchableOpacity
+              style={styles2}
+              onPress={() => handleButtonPress("TagNewScreen")}
+            >
+              <Icon
+                name="plus"
+                size={20}
+                color="#fff"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={styles2.buttonText}>Nova Tag</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles2}
+              onPress={() => handleButtonPress("TagReportScreen")}
+            >
+              <Icon
+                name="bar-chart"
+                size={20}
+                color="#fff"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={styles2.buttonText}>Relatório de Tags</Text>
+            </TouchableOpacity>
 
             <FlatList
               keyExtractor={(item) => item.id}

@@ -6,7 +6,7 @@ import {
   FlatList,
 } from "react-native";
 import styles from "../config/styles";
-import { useNavigation, useFocusEffect  } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -20,8 +20,7 @@ const UsuariosListaScreen = () => {
 
   const handleButtonPress = (screenName) => {
     navigation.navigate(screenName);
-  }
-
+  };
 
   const fetchData = async () => {
     const colRef = collection(db, "usuarios");
@@ -40,7 +39,6 @@ const UsuariosListaScreen = () => {
     }, [])
   );
 
-
   //useEffect(() => {
   //  async function fetchData() {
   //    // Busca dados da coleção "usuarios"
@@ -53,7 +51,6 @@ const UsuariosListaScreen = () => {
   //  fetchData();
   //}, []);
 
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -62,19 +59,32 @@ const UsuariosListaScreen = () => {
           <Text style={{ textAlign: "justify", margin: 10 }}>
             Local destinado para o CRUD de usuários.
           </Text>
-          
+
           <View style={styles.container}>
-          <TouchableOpacity
-        style={styles2}
-        onPress={() => handleButtonPress("TagNewScreen")}
-      >
-        <Icon name="plus" size={20} color="#fff" style={{ marginRight: 10 }} />
-        <Text style={styles2.buttonText}>Nova Tag</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles2} onPress={() => handleButtonPress("TagReportScreen")}>
-        <Icon name="bar-chart" size={20} color="#fff" style={{ marginRight: 10 }} />
-        <Text style={styles2.buttonText}>Relatório de Tags</Text>
-      </TouchableOpacity>
+            <TouchableOpacity
+              style={styles2}
+              onPress={() => handleButtonPress("TagNewScreen")}
+            >
+              <Icon
+                name="plus"
+                size={20}
+                color="#fff"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={styles2.buttonText}>Nova Usuário</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles2}
+              onPress={() => handleButtonPress("TagReportScreen")}
+            >
+              <Icon
+                name="bar-chart"
+                size={20}
+                color="#fff"
+                style={{ marginRight: 10 }}
+              />
+              <Text style={styles2.buttonText}>Relatório de Usuários</Text>
+            </TouchableOpacity>
             <FlatList
               keyExtractor={(item) => item.id}
               data={usuarios}
@@ -92,7 +102,9 @@ const UsuariosListaScreen = () => {
                     />
                     <List.Item
                       title={`CPF: ${item.cpf}`}
-                      left={(props) => <List.Icon {...props} icon="card-account-details" />}
+                      left={(props) => (
+                        <List.Icon {...props} icon="card-account-details" />
+                      )}
                     />
                     <List.Item
                       title={`Telefone: ${item.telefone}`}
@@ -117,7 +129,7 @@ const UsuariosListaScreen = () => {
                     {/* Não é recomendado exibir a senha */}
                   </Card.Content>
                   <Card.Actions>
-                  <Button
+                    <Button
                       onPress={() =>
                         navigation.navigate("UsuariosEditScreen", { item })
                       }
